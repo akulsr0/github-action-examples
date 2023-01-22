@@ -1,0 +1,19 @@
+name: Passing data between steps
+
+on: [push]
+
+jobs:
+  passing-data-between-steps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Passing data between steps
+        id: step-1
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const author = context.payload.head_commit.author;
+            console.log(author);
+            core.setOutput("author", author);
+
+      - name: Print author
+        run: echo ${{ steps.step-1.outputs.author }}
