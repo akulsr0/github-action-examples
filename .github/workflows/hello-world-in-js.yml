@@ -1,0 +1,14 @@
+name: Hello World in JS
+
+on: [push, pull_request]
+
+jobs:
+  say-hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say `Hello World` from JS
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log('Hello World');
+            console.log('Hello Again...')
