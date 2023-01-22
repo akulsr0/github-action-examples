@@ -1,0 +1,13 @@
+name: Workflow Context
+
+on: [push]
+
+jobs:
+  workflow-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Workflow Context
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(context)
