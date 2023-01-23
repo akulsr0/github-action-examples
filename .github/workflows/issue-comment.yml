@@ -1,0 +1,20 @@
+name: Issue Comment
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  issue-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Adding Comment to Issues Openend
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Thanks for reporting an issue.'
+            })
