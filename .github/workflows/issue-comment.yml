@@ -11,6 +11,7 @@ jobs:
       - name: Adding Comment to Issues Openend
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
