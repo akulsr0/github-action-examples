@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function App() {
   return (
     <main>
@@ -5,6 +7,7 @@ export default function App() {
       <a
         href="https://github.com/akulsr0/github-action-examples"
         target="_blank"
+        rel="noreferrer"
       >
         [github]
       </a>
