@@ -34,4 +34,4 @@ jobs:
         with:
           message: "Preview URL: https://github-action-examples-pr${{ github.event.number }}.surge.sh"
           repo-token: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
-          repo-token-user-login: "github-actions[bot]"
+          message-id: preview-comment
