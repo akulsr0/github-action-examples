@@ -24,7 +24,7 @@ jobs:
       - name: Deploy Website
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: "github-action-examples-pr${{ github.event.number }}.surge.sh"
+          domain: "github-action-examples-pr${{ github.event.number }}-${{ github.run_number }}.surge.sh"
           project: "dist"
           login: ${{ secrets.GH_ACTION_SURGE_LOGIN }}
           token: ${{ secrets.GH_ACTION_SURGE_TOKEN }}
