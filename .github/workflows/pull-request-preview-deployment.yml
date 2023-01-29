@@ -28,6 +28,7 @@ jobs:
       - name: Check branch name
         # run: echo ${{ github.context.payload.number }}
         run: echo ${{ toJson(github) }}
+        run: echo ${{ github.event.number }}
         # id: get-branch
         # uses: actions/github-script@v6
         # with:
