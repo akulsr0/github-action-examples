@@ -15,6 +15,12 @@ jobs:
         with:
           node-version: 16
 
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
+          message: |
+            ⏳ Deploying to https://github-action-examples-pr${{ github.event.number }}.surge.sh
+
       - name: Install deps
         run: npm ci
 
@@ -24,13 +30,15 @@ jobs:
       - name: Deploy Website
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: "github-action-examples-pr${{ github.event.number }}-${{ github.run_number }}.surge.sh"
+          domain: "github-action-examples-pr${{ github.event.number }}.surge.sh"
           project: "dist"
           login: ${{ secrets.GH_ACTION_SURGE_LOGIN }}
           token: ${{ secrets.GH_ACTION_SURGE_TOKEN }}
 
       - name: Comment Preview URL
-        uses: mshick/add-pr-comment@v1
+        if: ${{ success() }}
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: "Preview URL: https://github-action-examples-pr${{ github.event.number }}-${{ github.run_number }}.surge.sh"
-          repo-token: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
+          message: |
+            Preview URL: https://github-action-examples-pr${{ github.event.number }}.surge.sh
