@@ -15,30 +15,16 @@ jobs:
         with:
           node-version: 16
 
-      # - name: Install deps
-      #   run: npm ci
+      - name: Install deps
+        run: npm ci
 
-      # - name: Build Website
-      #   run: npm run build
+      - name: Build Website
+        run: npm run build
 
-      # - name: Get branch
-      #   id: get-branch
-      #   run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
-
-      - name: Check branch name
-        # run: echo ${{ github.context.payload.number }}
-        # run: echo ${{ toJson(github) }}
-        run: echo ${{ github.event.number }}
-        # id: get-branch
-        # uses: actions/github-script@v6
-        # with:
-        #   script: |
-        #     console.log(context.payload.number)
-
-      # - name: Deploy Website
-      #   uses: dswistowski/surge-sh-action@v1
-      #   with:
-      #     domain: "github-action-examples.surge.sh"
-      #     project: "dist"
-      #     login: ${{ secrets.GH_ACTION_SURGE_LOGIN }}
-      #     token: ${{ secrets.GH_ACTION_SURGE_TOKEN }}
+      - name: Deploy Website
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: "github-action-examples-pr${{ github.event.number }}.surge.sh"
+          project: "dist"
+          login: ${{ secrets.GH_ACTION_SURGE_LOGIN }}
+          token: ${{ secrets.GH_ACTION_SURGE_TOKEN }}
