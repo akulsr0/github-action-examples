@@ -17,7 +17,7 @@ jobs:
 
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_ACTION_BOT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
           message: |
             ⏳ Deploying to https://github-action-examples-pr${{ github.event.number }}.surge.sh
 
@@ -39,6 +39,6 @@ jobs:
         if: ${{ success() }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_ACTION_BOT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
           message: |
             Preview URL: https://github-action-examples-pr${{ github.event.number }}.surge.sh
