@@ -1,6 +1,7 @@
 {
-  "name": "github-action-hello-world",
+  "name": "github-action-examples",
   "private": true,
+  "homepage": "https://akulsr0.github.io/github-action-examples/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
