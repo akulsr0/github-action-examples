@@ -30,7 +30,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(context)
+            console.log(context.payload.pull_request.base)
 
       # - name: Deploy Website
       #   uses: dswistowski/surge-sh-action@v1
