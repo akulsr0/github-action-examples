@@ -33,5 +33,5 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: "Preview URL: https://github-action-examples-pr${{ github.event.number }}.surge.sh"
-          repo-token: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: "github-actions[bot]"
