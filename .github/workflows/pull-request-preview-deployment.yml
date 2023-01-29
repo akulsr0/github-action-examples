@@ -21,12 +21,12 @@ jobs:
       - name: Build Website
         run: npm run build
 
-      - name: Get branch
-        id: get-branch
-        run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+      # - name: Get branch
+      #   id: get-branch
+      #   run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
 
       - name: Check branch name
-        run: echo ${{ steps.get-branch.outputs.branch }}
+        run: echo ${{ github.event.pull_request.base }}
 
       # - name: Deploy Website
       #   uses: dswistowski/surge-sh-action@v1
