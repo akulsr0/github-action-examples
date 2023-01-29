@@ -15,23 +15,26 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install deps
-        run: npm ci
+      # - name: Install deps
+      #   run: npm ci
 
-      - name: Build Website
-        run: npm run build
+      # - name: Build Website
+      #   run: npm run build
 
-      - name: Deploy Website
-        uses: dswistowski/surge-sh-action@v1
-        with:
-          domain: "github-action-examples-pr${{ github.event.number }}.surge.sh"
-          project: "dist"
-          login: ${{ secrets.GH_ACTION_SURGE_LOGIN }}
-          token: ${{ secrets.GH_ACTION_SURGE_TOKEN }}
+      # - name: Deploy Website
+      #   uses: dswistowski/surge-sh-action@v1
+      #   with:
+      #     domain: "github-action-examples-pr${{ github.event.number }}.surge.sh"
+      #     project: "dist"
+      #     login: ${{ secrets.GH_ACTION_SURGE_LOGIN }}
+      #     token: ${{ secrets.GH_ACTION_SURGE_TOKEN }}
 
-      - name: Comment Preview URL
-        uses: mshick/add-pr-comment@v1
-        with:
-          message: "Preview URL: https://github-action-examples-pr${{ github.event.number }}.surge.sh"
-          repo-token: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
-          message-id: preview-comment
+      - name: check run
+        run: ${{ toJson(github) }}
+
+      # - name: Comment Preview URL
+      #   uses: mshick/add-pr-comment@v1
+      #   with:
+      #     message: "Preview URL: https://github-action-examples-pr${{ github.event.number }}.surge.sh"
+      #     repo-token: ${{ secrets.GH_ACTION_EXAMPLES_PAT }}
+      #     message-id: preview-comment
