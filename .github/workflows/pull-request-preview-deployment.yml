@@ -15,18 +15,22 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install deps
-        run: npm ci
+      # - name: Install deps
+      #   run: npm ci
 
-      - name: Build Website
-        run: npm run build
+      # - name: Build Website
+      #   run: npm run build
 
       # - name: Get branch
       #   id: get-branch
       #   run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
 
       - name: Check branch name
-        run: echo ${{ github.event.pull_request.base }}
+        id: get-branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+          console.log(context)
 
       # - name: Deploy Website
       #   uses: dswistowski/surge-sh-action@v1
