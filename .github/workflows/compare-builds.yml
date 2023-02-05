@@ -32,7 +32,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            import {getSize} from './build-size.js'
+            import {getSize} from './build-size.mjs'
             (async () => {
               const result = await getSize();
               console.log('2--->', result);
