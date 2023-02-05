@@ -93,8 +93,16 @@ jobs:
           name: pr
           path: pr
 
-      - name: echo results
-        run: ls
-
       - name: echo ./pr/
         run: ls ./pr/
+
+      - name: Getting build size
+        id: get-build-size
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const prResultString = fs.readFileSync('./pr/stats.json', 'utf-8');
+            console.log('---1', prResultString);
+            const {size} = JSON.parse(prResultString);
+            console.log('---2', size);
