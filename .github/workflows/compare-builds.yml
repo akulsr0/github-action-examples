@@ -1,0 +1,58 @@
+name: Build Size Compare
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-base:
+    name: Build base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1.7.10
+        with:
+          working-directory: './'
+          useLockFile: false
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: false
+
+      - name: Get base build size
+        id: base-size
+        uses: actions/github-script@v6
+        with:
+          script: |
+            import {getSize} from './build-size.js'
+            (async () => {
+              const result = await getSize();
+              console.log('2--->', result);
+            })()
+            core.setOutput("size", `size`);
+
+  # build-pr:
+  #   name: Build PR
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Install deps (with cache)
+  #       uses: bahmutov/npm-install@v1.7.10
+  #       with:
+  #         working-directory: './'
+  #         useLockFile: false
+
+  #     - name: Build
+  #       run: npm run build:stats
+  #       env:
+  #         CI: false
