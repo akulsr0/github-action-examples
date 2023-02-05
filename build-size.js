@@ -1,4 +1,6 @@
-const getFolderSize = require('get-folder-size');
+import getFolderSize from 'get-folder-size';
+import path from 'path';
+import fs from 'fs';
 
 function humanFileSize(size) {
   var i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
@@ -12,7 +14,6 @@ function humanFileSize(size) {
 const getSize = async () => {
   const size = await getFolderSize.loose('./dist');
   const readableSize = humanFileSize(size);
-  console.log('---> 1', size, readableSize);
   return {
     size: {
       bytes: size,
@@ -21,4 +22,8 @@ const getSize = async () => {
   };
 };
 
-module.exports = { getSize };
+(async () => {
+  const result = await getSize();
+  const filePath = path.join('./stats.json');
+  fs.writeFileSync(filePath, `${JSON.stringify(result)}`);
+})();

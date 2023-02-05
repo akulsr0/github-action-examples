@@ -27,17 +27,18 @@ jobs:
         env:
           CI: false
 
-      - name: Get base build size
-        id: base-size
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const {getSize} = require('./build-size.js');
-            (async () => {
-              const result = await getSize();
-              console.log('2--->', result);
-            })()
-            core.setOutput("size", `size`);
+      - name: path check
+        run: ls
+
+      - name: path check 2
+        run: ls ../
+
+      # - name: Get base build size
+      #   id: base-size
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.setOutput("size", `size`);
 
   # build-pr:
   #   name: Build PR
