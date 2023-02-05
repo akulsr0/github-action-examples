@@ -30,8 +30,11 @@ jobs:
       - name: path check
         run: ls
 
+      - name: build stats file
+        run: node ./scripts/build-size.js
+
       - name: path check 2
-        run: ls ../
+        run: ls
 
       # - name: Get base build size
       #   id: base-size

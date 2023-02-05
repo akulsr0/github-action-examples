@@ -24,6 +24,6 @@ const getSize = async () => {
 
 (async () => {
   const result = await getSize();
-  const filePath = path.join('./stats.json');
+  const filePath = path.join('../stats.json');
   fs.writeFileSync(filePath, `${JSON.stringify(result)}`);
 })();

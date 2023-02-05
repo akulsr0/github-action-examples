@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "postbuild": "node build-size.js",
     "preview": "vite preview",
     "lint": "eslint src/ --quiet",
     "format:check": "prettier --check './src/**/*.{js,jsx,ts,tsx,css}'",
