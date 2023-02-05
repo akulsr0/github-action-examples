@@ -105,4 +105,4 @@ jobs:
             console.log('---1', diffInBytes);
             console.log('---2', baseSizeString);
             console.log('---3', prSizeString);
-            console.log('---4', test);
+            console.log('---4', 'test');
