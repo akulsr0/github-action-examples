@@ -33,7 +33,7 @@ jobs:
       - name: Upload pr stats.json
         uses: actions/upload-artifact@v2
         with:
-          name: pr
+          name: base
           path: ./stats.json
           retention-days: 1
 
