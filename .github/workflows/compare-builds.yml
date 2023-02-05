@@ -7,14 +7,48 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build-base:
-    name: Build base
+  # build-base:
+  #   name: Build base
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         ref: ${{ github.base_ref }}
+
+  #     - name: Install deps (with cache)
+  #       uses: bahmutov/npm-install@v1.7.10
+  #       with:
+  #         working-directory: './'
+  #         useLockFile: false
+
+  #     - name: Build
+  #       run: npm run build
+  #       env:
+  #         CI: false
+
+  #     - name: path check
+  #       run: ls
+
+  #     - name: build stats file
+  #       run: node ./scripts/build-size.js
+
+  #     - name: path check 2
+  #       run: ls
+
+  #     - name: Get base build size
+  #       id: base-size
+  #       uses: actions/github-script@v6
+  #       with:
+  #         script: |
+  #         core.setOutput("size", `size`);
+
+  build-pr:
+    name: Build PR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.base_ref }}
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1.7.10
@@ -23,7 +57,7 @@ jobs:
           useLockFile: false
 
       - name: Build
-        run: npm run build
+        run: npm run build:stats
         env:
           CI: false
 
@@ -35,28 +69,3 @@ jobs:
 
       - name: path check 2
         run: ls
-
-      # - name: Get base build size
-      #   id: base-size
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       core.setOutput("size", `size`);
-
-  # build-pr:
-  #   name: Build PR
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Install deps (with cache)
-  #       uses: bahmutov/npm-install@v1.7.10
-  #       with:
-  #         working-directory: './'
-  #         useLockFile: false
-
-  #     - name: Build
-  #       run: npm run build:stats
-  #       env:
-  #         CI: false
