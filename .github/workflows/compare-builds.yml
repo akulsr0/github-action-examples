@@ -57,7 +57,7 @@ jobs:
           useLockFile: false
 
       - name: Build
-        run: npm run build:stats
+        run: npm run build
         env:
           CI: false
 
