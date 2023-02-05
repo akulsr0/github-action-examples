@@ -33,7 +33,7 @@ jobs:
       - name: Upload pr stats.json
         uses: actions/upload-artifact@v2
         with:
-          name: pr
+          name: base
           path: ./stats.json
           retention-days: 1
 
@@ -86,15 +86,22 @@ jobs:
           name: pr
           path: pr
 
-      - name: echo ./pr/
-        run: ls ./pr/
-
       - name: Getting build size
         id: get-build-size
         uses: actions/github-script@v6
         with:
           script: |
             const fs = require('fs');
+
+            function humanFileSize(size) {
+              var i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
+              return (
+                (size / Math.pow(1024, i)).toFixed(2) * 1 +
+                ' ' +
+                ['B', 'kB', 'MB', 'GB', 'TB'][i]
+              );
+            }
+
             const baseResultString = fs.readFileSync('./base/stats.json', 'utf-8');
             const prResultString = fs.readFileSync('./pr/stats.json', 'utf-8');
             const baseSize = JSON.parse(baseResultString).size;
@@ -102,6 +109,21 @@ jobs:
             const baseSizeString = baseSize.readableString;
             const prSizeString = prSize.readableString;
             const diffInBytes = prSize.bytes - baseSize.bytes;
-            console.log('---1', diffInBytes);
-            console.log('---2', baseSizeString);
-            console.log('---3', prSizeString);
+            const diffSizeString = humanFileSize(diffInBytes);
+            const diffPerc = (diffInBytes*100) / baseSize.bytes;
+
+            core.setOutput("baseSizeString", baseSizeString);
+            core.setOutput("prSizeString", prSizeString);
+            core.setOutput("diffSizeString", diffSizeString);
+            core.setOutput("percent", diffPerc);
+
+      - name: Comment
+        uses: NejcZdovc/comment-pr@v1.1.1
+        with:
+          file: 'comment.md'
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_ACTION_EXAMPLES_PAT}}
+          OLD: ${{steps.get-build-size.outputs.baseSizeString}}
+          NEW: ${{steps.get-build-size.outputs.prSizeString}}
+          DIFF: ${{steps.get-build-size.outputs.diffSizeString}}
+          DIFF_PERCENT: ${{steps.get-build-size.outputs.percent}}
