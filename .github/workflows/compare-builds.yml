@@ -61,11 +61,20 @@ jobs:
         env:
           CI: false
 
-      - name: path check
-        run: ls
-
       - name: build stats file
         run: node ./scripts/build-size.js
 
       - name: path check 2
         run: ls
+
+      - name: Get pull request build size
+        id: pr-size
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const size = fs.readFileSync('./stats.json', 'utf-8');
+            console.log('1-', size);
+            const sizeJson = JSON.parse(size);
+            console.log('2-', sizeJson);
+            core.setOutput("size", `size`);
