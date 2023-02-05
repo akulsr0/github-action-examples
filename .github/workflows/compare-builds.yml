@@ -86,9 +86,6 @@ jobs:
           name: pr
           path: pr
 
-      - name: echo ./pr/
-        run: ls ./pr/
-
       - name: Getting build size
         id: get-build-size
         uses: actions/github-script@v6
@@ -115,15 +112,10 @@ jobs:
             const diffSizeString = humanFileSize(diffInBytes);
             const diffPerc = (diffInBytes*100) / baseSize.bytes;
 
-            console.log('---1', diffInBytes, diffSizeString);
-            console.log('---2', baseSizeString);
-            console.log('---3', prSizeString);
-            console.log('---4', diffPerc);
-
             core.setOutput("baseSizeString", baseSizeString);
             core.setOutput("prSizeString", prSizeString);
             core.setOutput("diffSizeString", diffSizeString);
-            core.setOutput("percent", `${diffPerc}%`);
+            core.setOutput("percent", diffPerc);
 
       - name: Comment
         uses: NejcZdovc/comment-pr@v1.1.1
