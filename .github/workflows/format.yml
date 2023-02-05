@@ -1,0 +1,27 @@
+name: Code Formatting Check
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    name: Check PR's Formatting
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1.7.10
+        with:
+          working-directory: './'
+          useLockFile: false
+
+      - name: prettier formatting check
+        run: npm run format:check
