@@ -115,7 +115,7 @@ jobs:
             core.setOutput("baseSizeString", baseSizeString);
             core.setOutput("prSizeString", prSizeString);
             core.setOutput("diffSizeString", diffSizeString);
-            core.setOutput("percent", diffPerc);
+            core.setOutput("percent", diffPerc.toFixed(2));
 
       - name: Comment
         uses: NejcZdovc/comment-pr@v1.1.1
