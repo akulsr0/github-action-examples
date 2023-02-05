@@ -74,7 +74,8 @@ jobs:
   report:
     name: Generate report
     runs-on: ubuntu-latest
-    needs: [build-base, build-pr]
+    # needs: [build-base, build-pr]
+    needs: [build-pr]
 
     steps:
       - name: Checkout PR
