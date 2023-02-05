@@ -1,0 +1,107 @@
+name: Build Size Compare
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-base:
+    name: Build base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1.7.10
+        with:
+          working-directory: './'
+          useLockFile: false
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: false
+
+      - name: build stats file
+        run: node ./scripts/build-size.js
+
+      - name: Upload pr stats.json
+        uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: ./stats.json
+          retention-days: 1
+
+  build-pr:
+    name: Build PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1.7.10
+        with:
+          working-directory: './'
+          useLockFile: false
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: false
+
+      - name: build stats file
+        run: node ./scripts/build-size.js
+
+      - name: Upload pr stats.json
+        uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: ./stats.json
+          retention-days: 1
+
+  report:
+    name: Generate report
+    runs-on: ubuntu-latest
+    needs: [build-base, build-pr]
+
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v2
+
+      - name: Download base stats
+        uses: actions/download-artifact@v2
+        with:
+          name: base
+          path: base
+
+      - name: Download PR stats
+        uses: actions/download-artifact@v2
+        with:
+          name: pr
+          path: pr
+
+      - name: echo ./pr/
+        run: ls ./pr/
+
+      - name: Getting build size
+        id: get-build-size
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const baseResultString = fs.readFileSync('./base/stats.json', 'utf-8');
+            const prResultString = fs.readFileSync('./pr/stats.json', 'utf-8');
+            const baseSize = JSON.parse(baseResultString).size;
+            const prSize = JSON.parse(prResultString).size;
+            const baseSizeString = baseSize.readableString;
+            const prSizeString = prSize.readableString;
+            const diffInBytes = prSize.bytes - baseSize.bytes;
+            console.log('---1', diffInBytes);
+            console.log('---2', baseSizeString);
+            console.log('---3', prSizeString);
