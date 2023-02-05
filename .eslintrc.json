@@ -8,6 +8,7 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "ignorePatterns": ["build-size.js"],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

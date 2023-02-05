@@ -1,4 +1,4 @@
-import getFolderSize from 'get-folder-size';
+const getFolderSize = require('get-folder-size');
 
 function humanFileSize(size) {
   var i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
@@ -9,7 +9,7 @@ function humanFileSize(size) {
   );
 }
 
-export const getSize = async () => {
+const getSize = async () => {
   const size = await getFolderSize.loose('./dist');
   const readableSize = humanFileSize(size);
   console.log('---> 1', size, readableSize);
@@ -20,3 +20,5 @@ export const getSize = async () => {
     },
   };
 };
+
+module.exports = { getSize };
