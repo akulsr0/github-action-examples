@@ -120,13 +120,18 @@ jobs:
             console.log('---3', prSizeString);
             console.log('---4', diffPerc);
 
-      # - name: Comment
-      #   uses: NejcZdovc/comment-pr@v1.1.1
-      #   with:
-      #     file: 'comment.md'
-      #   env:
-      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      #     OLD: ${{steps.get-build-size.outputs.baseSizeString}}
-      #     NEW: ${{steps.get-build-size.outputs.prSizeString}}
-      #     DIFF: ${{steps.get-build-size.outputs.diffSizeString}}
-      #     DIFF_PERCENT: ${{steps.get-build-size.outputs.percent}}
+            core.setOutput("baseSizeString", baseSizeString);
+            core.setOutput("prSizeString", prSizeString);
+            core.setOutput("diffSizeString", diffSizeString);
+            core.setOutput("percent", `${diffPerc}%`);
+
+      - name: Comment
+        uses: NejcZdovc/comment-pr@v1.1.1
+        with:
+          file: 'comment.md'
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_ACTION_EXAMPLES_PAT}}
+          OLD: ${{steps.get-build-size.outputs.baseSizeString}}
+          NEW: ${{steps.get-build-size.outputs.prSizeString}}
+          DIFF: ${{steps.get-build-size.outputs.diffSizeString}}
+          DIFF_PERCENT: ${{steps.get-build-size.outputs.percent}}
