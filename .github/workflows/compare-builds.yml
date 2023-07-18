@@ -122,7 +122,7 @@ jobs:
         with:
           file: 'comment.md'
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GH_ACTION_EXAMPLES_PAT}}
           OLD: ${{steps.get-build-size.outputs.baseSizeString}}
           NEW: ${{steps.get-build-size.outputs.prSizeString}}
           DIFF: ${{steps.get-build-size.outputs.diffSizeString}}
