@@ -1,4 +1,5 @@
 import React from 'react';
+import codeImage from './assets/code.png';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       >
         [github]
       </a>
+      <img src={codeImage} alt="code" />
     </main>
   );
 }
