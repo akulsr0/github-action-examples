@@ -1,4 +1,5 @@
 import React from 'react';
+import img from './img.jpeg';
 
 export default function App() {
   return (
@@ -11,6 +12,8 @@ export default function App() {
       >
         [github]
       </a>
+      <br />
+      <img src={img} alt="some-img" />
     </main>
   );
 }
